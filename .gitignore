@@ -1,0 +1,22 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+
+# vite / logs
+*.log
+npm-debug.log*
+.DS_Store
+
+# local env
+.env
+.env.*
+!.env.example
+
+# editor
+.vscode/
+.idea/
+
+# vercel
+.vercel/
