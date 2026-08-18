@@ -2,12 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <title>Fake Tip Kiosk</title>
     <style>
       * { box-sizing: border-box; }
       html, body, #root { margin: 0; height: 100%; }
-      body { font-family: Inter, system-ui, -apple-system, sans-serif; background: #0b1220; }
+      /* Kiosk: lock the page so the view never scrolls on any device. */
+      html, body { overflow: hidden; overscroll-behavior: none; }
+      body {
+        font-family: Inter, system-ui, -apple-system, sans-serif;
+        background: #0b1220;
+        -webkit-text-size-adjust: 100%;
+      }
+      /* Full-viewport height that follows the visible area (URL bar etc.).
+         Falls back to 100vh where dynamic units are unsupported. */
+      :root { --app-h: 100vh; }
+      @supports (height: 100dvh) { :root { --app-h: 100dvh; } }
     </style>
   </head>
   <body>
