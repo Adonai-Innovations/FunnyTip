@@ -21,6 +21,43 @@
          Falls back to 100vh where dynamic units are unsupported. */
       :root { --app-h: 100vh; }
       @supports (height: 100dvh) { :root { --app-h: 100dvh; } }
+
+      /* iPad in landscape: let the kiosk card fill the whole screen instead of
+         floating as a narrow centered panel. min-height: 700px targets tablets
+         (iPad landscape height >= 768) and excludes phones in landscape
+         (height <= ~430), so portrait and phone layouts keep the centered card.
+         The controls stay in a comfortable centered column on the wide canvas. */
+      @media (orientation: landscape) and (min-height: 700px) {
+        .tk-screen {
+          padding: 0 !important;
+          justify-content: flex-start !important;
+        }
+        .tk-card {
+          max-width: none !important;
+          width: 100% !important;
+          flex: 1 1 auto !important;
+          max-height: none !important;
+          border-radius: 0 !important;
+          border: none !important;
+          box-shadow: none !important;
+          padding: max(16px, env(safe-area-inset-top))
+                   max(24px, env(safe-area-inset-right))
+                   12px
+                   max(24px, env(safe-area-inset-left)) !important;
+        }
+        .tk-content {
+          display: flex !important;
+          flex-direction: column !important;
+        }
+        .tk-inner {
+          width: 100%;
+          max-width: 460px;
+          margin: auto;
+        }
+        .tk-footer {
+          padding-bottom: max(10px, env(safe-area-inset-bottom)) !important;
+        }
+      }
     </style>
   </head>
   <body>
