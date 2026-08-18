@@ -217,6 +217,7 @@ export default function TipKiosk() {
           </button>
         </header>
 
+        <div style={styles.content}>
         {view === "kiosk" ? (
           thanks ? (
             <div style={styles.thanks}>
@@ -301,6 +302,7 @@ export default function TipKiosk() {
         ) : (
           <HistoryView groups={groups} count={entries.length} />
         )}
+        </div>
       </div>
       <p style={styles.footer}>Demo kiosk · not a real payment terminal</p>
     </div>
@@ -351,25 +353,38 @@ function Stat({ label, value }) {
 // --- styles ----------------------------------------------------------------
 const styles = {
   screen: {
-    minHeight: "100vh",
+    // Fill the visible viewport exactly and never scroll the page — the
+    // kiosk must own the whole screen on mobile / iPad / desktop.
+    height: "var(--app-h, 100vh)",
+    width: "100%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    padding: 20,
+    overflow: "hidden",
+    padding:
+      "max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left))",
     background:
       "radial-gradient(1200px 600px at 50% -10%, #16233b 0%, #0b1220 60%)",
   },
   card: {
     width: "100%",
     maxWidth: 420,
+    // Shrink to fit short screens; content region absorbs the overflow.
+    maxHeight: "100%",
+    display: "flex",
+    flexDirection: "column",
     background: "#111c30",
     borderRadius: 20,
-    padding: 22,
+    padding: "clamp(14px, 3.5vh, 22px)",
     boxShadow: "0 20px 60px rgba(0,0,0,0.45)",
     border: "1px solid rgba(255,255,255,0.06)",
     color: "#e8eef7",
   },
+  // Flexible region below the fixed header. Fits without scrolling in the
+  // normal case; only scrolls internally as a graceful fallback on very
+  // short screens (e.g. a long history list) — the page itself never scrolls.
+  content: { flex: "1 1 auto", minHeight: 0, overflowY: "auto" },
   header: {
     display: "flex",
     alignItems: "center",
@@ -393,10 +408,14 @@ const styles = {
     fontSize: 13,
     cursor: "pointer",
   },
-  prompt: { fontSize: 22, fontWeight: 700, margin: "10px 0 16px" },
+  prompt: {
+    fontSize: 22,
+    fontWeight: 700,
+    margin: "clamp(4px, 1.5vh, 10px) 0 clamp(8px, 2vh, 16px)",
+  },
   tipRow: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 },
   tipBtn: {
-    padding: "18px 0",
+    padding: "clamp(12px, 2.4vh, 18px) 0",
     fontSize: 20,
     fontWeight: 700,
     background: "#0e1830",
@@ -415,13 +434,13 @@ const styles = {
     display: "block",
     fontSize: 13,
     color: "#9fb3cf",
-    margin: "18px 0 6px",
+    margin: "clamp(10px, 2.4vh, 18px) 0 6px",
   },
   signWrap: {
     position: "relative",
     background: "#f7fafc",
     borderRadius: 12,
-    height: 140,
+    height: "clamp(96px, 18vh, 140px)",
     overflow: "hidden",
   },
   canvas: { width: "100%", height: "100%", touchAction: "none", display: "block" },
@@ -443,7 +462,7 @@ const styles = {
     cursor: "pointer",
     padding: 0,
   },
-  nameRow: { display: "flex", gap: 10, marginTop: 16 },
+  nameRow: { display: "flex", gap: 10, marginTop: "clamp(10px, 2vh, 16px)" },
   input: {
     flex: 1,
     minWidth: 0,
@@ -458,8 +477,8 @@ const styles = {
   },
   primary: {
     width: "100%",
-    marginTop: 18,
-    padding: "16px 0",
+    marginTop: "clamp(12px, 2.4vh, 18px)",
+    padding: "clamp(13px, 2.2vh, 16px) 0",
     fontSize: 17,
     fontWeight: 700,
     background: "#3ddc97",
@@ -524,5 +543,11 @@ const styles = {
   stat: { textAlign: "center" },
   statValue: { fontSize: 20, fontWeight: 700 },
   statLabel: { fontSize: 11, color: "#9fb3cf", marginTop: 2 },
-  footer: { marginTop: 16, color: "#54627a", fontSize: 12 },
+  footer: {
+    flex: "0 0 auto",
+    margin: "clamp(8px, 1.8vh, 16px) 0 0",
+    color: "#54627a",
+    fontSize: 12,
+    textAlign: "center",
+  },
 };
