@@ -20,3 +20,8 @@ npm-debug.log*
 
 # vercel
 .vercel/
+
+# local verification scratch
+shots/
+verify*.mjs
+beforeshot.mjs

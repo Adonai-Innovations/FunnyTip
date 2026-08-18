@@ -201,8 +201,8 @@ export default function TipKiosk() {
   const groups = groupByPerson(entries);
 
   return (
-    <div style={styles.screen}>
-      <div style={styles.card}>
+    <div className="tk-screen" style={styles.screen}>
+      <div className="tk-card" style={styles.card}>
         <header style={styles.header}>
           <div style={styles.brand}>
             <span style={styles.brandDot} />
@@ -217,7 +217,8 @@ export default function TipKiosk() {
           </button>
         </header>
 
-        <div style={styles.content}>
+        <div className="tk-content" style={styles.content}>
+        <div className="tk-inner">
         {view === "kiosk" ? (
           thanks ? (
             <div style={styles.thanks}>
@@ -303,8 +304,9 @@ export default function TipKiosk() {
           <HistoryView groups={groups} count={entries.length} />
         )}
         </div>
+        </div>
       </div>
-      <p style={styles.footer}>Demo kiosk · not a real payment terminal</p>
+      <p className="tk-footer" style={styles.footer}>Demo kiosk · not a real payment terminal</p>
     </div>
   );
 }
