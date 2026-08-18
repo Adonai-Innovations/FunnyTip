@@ -442,7 +442,7 @@ const styles = {
     position: "relative",
     background: "#f7fafc",
     borderRadius: 12,
-    height: "clamp(96px, 18vh, 140px)",
+    height: "clamp(144px, 27vh, 210px)",
     overflow: "hidden",
   },
   canvas: { width: "100%", height: "100%", touchAction: "none", display: "block" },
